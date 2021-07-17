@@ -9,6 +9,7 @@ use App\Http\Controllers\Business\GetAllInfoBusinessProfileController;
 use App\Http\Controllers\Business\CustomerBusinessController;
 use App\Http\Controllers\User\RegisterUserController;
 use App\Http\Controllers\User\GetAllInfoUserProfileController;
+use App\Http\Controllers\Business\CustomerBusinessReportsController;
 
 
 use App\Http\Controllers\AuthController;
@@ -52,7 +53,8 @@ Route::post('/business/newcustomer',[CustomerBusinessController::class,'newCusto
 
 Route::post('/business/searchcustomer',[CustomerBusinessController::class,'searchCustomer'])->middleware('checkallmobile');
 
-
+Route::get('/business/report',[CustomerBusinessReportsController::class,'customerReport']);
+Route::get('/business/logout',[GetAllInfoBusinessProfileController::class,'businessLogout']);
 
 
 Route::post('/user/getverify',[RegisterUserController::class,'getVerify'])->middleware('checkphoneuser');

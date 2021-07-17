@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class GetAllInfoBusinessProfileController extends Controller
@@ -88,6 +89,14 @@ class GetAllInfoBusinessProfileController extends Controller
                 ], 500);
             }
         }
+    }
+
+    public function businessLogout(){
+        $clearcache=Artisan::call('cache:clear');
+
+
+     $BusinessLogout=auth()->logout();
+
     }
 
 

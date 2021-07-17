@@ -245,7 +245,7 @@ class CustomerBusinessController extends Controller
 
 
             if ($customerId != null) {
-                $getSearchCustomerInfo = DB::select('CALL BusinessGetCountPresentedCustomerSearch(?)', array($customerId));
+                $getSearchCustomerInfo = DB::select('CALL BusinessGetCountPresentedCustomerSearch(?,?)', array($customerId,$businesUserId));
                 $sumCustomerPresented = $getSearchCustomerInfo[0]->sum_customer_presented;
             } else {
                 $sumCustomerPresented = 0;

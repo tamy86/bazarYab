@@ -11,6 +11,7 @@ import BusinessSettingDiscount from './BusinessSettingDiscount';
 import BusinessEditProfile from './BusinessEditProfile';
 import BusinessHeader from "./BusinessHeader";
 import BusinessFooter from "./BusinessFooter";
+import BusinessLogout from "./BusinessLogout";
 import App from "../../app";
 
 
@@ -41,6 +42,10 @@ function Businessindex() {
                     </Route>
 
                     <Route exact path="/business/editprofile" component={BusinessEditProfile}>
+
+                    </Route>
+
+                    <Route exact path="/business/logout" component={BusinessLogout}>
 
                     </Route>
 

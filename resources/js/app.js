@@ -55,6 +55,7 @@ import HomeContent from './components/Home/HomeContent';
 
 import BusinessIndex from './components/Business/BusinessIndex';
 import UserIndex from './components/Users/UserIndex';
+import BusinessLogut from './components/Business/BusinessLogout';
 
 import axios from "axios";
 
@@ -135,6 +136,10 @@ function App(){
                 </Route>
 
                 <Route exact path="/business/editprofile" component={BusinessIndex}>
+
+                </Route>
+
+                <Route exact path="/business/logout" component={BusinessIndex}>
 
                 </Route>
 

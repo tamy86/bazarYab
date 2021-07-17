@@ -322,7 +322,9 @@ if((!result)&&(!resultCharFarsiName)&&(!resultCharFarsiFamily))
 
             </Dialog>
 
-
+            <div style={{fontFamily:'IRANSans',textAlign:'center'}}>
+                <h4>جهت درج صحیح اطلاعات در ابتدا حتما شماره همراه معرف را جستجو کنید سپس اطلاعات را ذخیره نمایید</h4>
+            </div>
 
             <div className="card-header" style={headerLoginForm}>
                 فرم مشتری جدید<PersonAddIcon style={mobileIconStyle}/>

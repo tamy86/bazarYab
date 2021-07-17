@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -10,61 +10,16 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Container from '@material-ui/core/Container';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
+import axios from "axios";
+import BusinessAlerts from "./BusinessAlertShow";
 
 
 const columns = [
-    { id: 'mobileNo', label: 'شماره همراه', minWidth: 120 },
-    { id: 'familyName', label: 'نام و نام خانوادگی', minWidth: 100 },
-    {
-        id: 'noCustomerSent',
-        label: 'تعداد معرف',
-        minWidth: 110,
-        align: 'right',
-
-    },
-    {
-        id: 'discountPercent',
-        label: 'درصد تخفیف',
-        minWidth: 110,
-        align: 'right',
-
-    },
-    {
-        id: 'discountDiuration',
-        label: 'معتبر تا تاریخ',
-        minWidth: 170,
-        align: 'right',
-
-    },
-
-];
-
-const rows = [
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-    {mobileNo:'09124567788', familyName:'سعید قربانی', noCustomerSent:20,discountPercent:20,discountDiuration:'12-02-1400'},
-
-
-
-
-];
-
+    { id: 'id', label: 'شماره', minWidth: 120 },
+    { id: 'name',label: 'نام', minWidth: 100 },
+    { id: 'family',label: 'نام خانوادگی',minWidth: 110,align: 'right',},
+    { id: 'phone',label: 'شماره همراه',minWidth: 110,align: 'right',},
+    { id: 'COUNT(businessnewcustomers.id)',label: 'تعداد معرف',minWidth: 170,align: 'right',},];
 
 const useStyles = makeStyles({
     root: {
@@ -112,6 +67,18 @@ function BusinessCustomerReportTable() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [errormessage,setErrormesasage]=React.useState('');
+    const [showerror,setShowerror]=React.useState(false);
+    const [rowReport,setRowReport]=React.useState([]);
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -123,8 +90,46 @@ function BusinessCustomerReportTable() {
     };
 
 
+
+
+    useEffect(()=>{
+
+        axios.defaults.headers.common['Authorization']='Bearer '+ localStorage.getItem('token');
+
+        const getAllInfoTable=async ()=>{
+            try{
+                const res= await axios.get('/api/business/report');
+
+
+                setRowReport(res.data);
+                          }
+            catch (error) {
+
+                setErrormesasage(
+                    {
+                        msg: error.response.data['message'],
+                        key: Math.random(),
+                        errortype: error.response.data['message type'],
+                    });
+                setShowerror(true);
+            }
+
+            };
+        getAllInfoTable();
+    },[setRowReport]);
+
+
+
+
+
     return(
+
+
         <Container style={styleBgForm}>
+
+            {showerror ?
+                <BusinessAlerts key={errormessage.key} errormessage={errormessage.msg} errortype={errormessage.errortype}/>:null
+            }
 
             <div className="card-header" style={headerReportForm}>
                     <AssignmentIcon/>
@@ -150,7 +155,7 @@ function BusinessCustomerReportTable() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                            {rowReport.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                         {columns.map((column) => {
@@ -164,13 +169,14 @@ function BusinessCustomerReportTable() {
                                     </TableRow>
                                 );
                             })}
+
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={rows.length}
+                    count={rowReport.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

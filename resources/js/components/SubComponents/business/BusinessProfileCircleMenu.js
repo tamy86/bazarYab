@@ -115,7 +115,7 @@ function BusinessProfileCircleMenu(){
                 <Link style={linkstyle} to='/business/settingdiscount'>
                 <MenuItem style={styleMenuItem}  onClick={handleClose}>تنظیم فرم تخفیف</MenuItem>
                 </Link>
-                <Link style={linkstyle} to=''>
+                <Link style={linkstyle} to='/business/logout'>
                 <MenuItem style={styleMenuItem}  onClick={handleClose}>خروج</MenuItem>
                 </Link>
             </Menu>
