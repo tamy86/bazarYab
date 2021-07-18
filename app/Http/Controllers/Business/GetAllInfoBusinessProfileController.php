@@ -16,18 +16,6 @@ class GetAllInfoBusinessProfileController extends Controller
 
     public function getToken(){
 
-//        $tokenValue=$request->input('token');
-//
-//         $userPhoneNo=Businessuser::select('phone','token')->where('token', $tokenValue)->get();
-//
-//         foreach ($userPhoneNo as $datauser)
-//         {
-//
-//             $businessUserPhoneNo=$datauser->phone;
-//             $businessToken=$datauser->token;
-//
-//         }
-
 
         try{
         $userToken=auth()->user()->token;

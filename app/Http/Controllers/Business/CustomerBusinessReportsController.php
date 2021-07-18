@@ -18,22 +18,6 @@ class CustomerBusinessReportsController extends Controller
           $businessUserId=auth()->user()->id;
 
 
-
-
-//              $value = Cache::remember('report',10, function () use ($businessUserId) {
-//                  $businessUserId = auth()->user()->id;
-//                  $makeDbView = DB::select('CALL BusinessViewGetInfoIds');
-//
-//                  $getBusinessCustomerReport = DB::select('CALL BusinessReportCountPresentedCustomers(?)', array($businessUserId));
-//                  return $getBusinessCustomerReport;
-//              });
-//
-//              if(Cache::has('report')) {
-//                  return response()->json(Cache::get('report'));
-//              }else{
-//                return response()->json('خراب');
-//              }
-
           if (Cache::has('report')){
 
 //              $test=Cache::get('report');
@@ -48,18 +32,6 @@ class CustomerBusinessReportsController extends Controller
               return response()->json(Cache::get('report'));
           }
 
-
-
-//          if ($getBusinessCustomerReport != null) {
-//
-////              Cache::put('report',$getBusinessCustomerReport,10);
-//
-//
-//                  return response()->json($getBusinessCustomerReport);
-//
-//          }else{
-//                return response()->json(['message'=>'خراب']);
-//          }
 
       }catch (\Exception $exception){
 
