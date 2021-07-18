@@ -253,7 +253,7 @@ class CustomerBusinessController extends Controller
 
 
             if ($customerPresentedBy != null) {
-                $whoPresentedCustomerInfo = DB::select('CALL BusinessGetInfoWhoPresentedCustomerSearch(?)', array($customerPresentedBy));
+                $whoPresentedCustomerInfo = DB::select('CALL BusinessGetInfoWhoPresentedCustomerSearch(?,?)', array($customerPresentedBy,$businesUserId));
                 $whoPresentedCustomerName = $whoPresentedCustomerInfo[0]->name;
                 $whoPresentedCustomerFamily = $whoPresentedCustomerInfo[0]->family;
                 $whoPresentedCustomerPhone = $whoPresentedCustomerInfo[0]->phone;
