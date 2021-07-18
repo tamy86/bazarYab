@@ -176,8 +176,8 @@ class CustomerBusinessController extends Controller
                         'Success' => 0,
                         'message' => 'مشتری ثبت شده قبلا در لیست مشتریان این کسب و کار قرار گرفته است',
                         'message_type' => 'warning',
-                        'jhg'=>$customerExist,
-                        'iu'=>$presentedExist,
+//                        'jhg'=>$customerExist,
+//                        'iu'=>$presentedExist,
 
                     ], 409);
 

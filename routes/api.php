@@ -54,6 +54,11 @@ Route::post('/business/newcustomer',[CustomerBusinessController::class,'newCusto
 Route::post('/business/searchcustomer',[CustomerBusinessController::class,'searchCustomer'])->middleware('checkallmobile');
 
 Route::get('/business/report',[CustomerBusinessReportsController::class,'customerReport']);
+
+Route::get('/business/editprofile',[GetAllInfoBusinessProfileController::class,'getBusinessInfo']);
+
+Route::put('/business/updateprofileform',[GetAllInfoBusinessProfileController::class,'updateBusinessInfo'])->middleware('checkbusinesseditprofile');
+
 Route::get('/business/logout',[GetAllInfoBusinessProfileController::class,'businessLogout']);
 
 

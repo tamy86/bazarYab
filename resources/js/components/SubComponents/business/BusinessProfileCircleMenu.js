@@ -36,7 +36,6 @@ function BusinessProfileCircleMenu(){
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [name,setName]=React.useState('');
-    const [family,setFamily]=React.useState('');
     const [errormessage,setErrormesasage]=React.useState('');
     const [showerror,setShowerror]=React.useState(false);
 
@@ -57,7 +56,6 @@ function BusinessProfileCircleMenu(){
             try{
                 const  res=  await axios.get('/api/business/getnamefamily');
                 setName(res.data['name']);
-                setFamily(res.data['family']);
 
             }
             catch(error){
@@ -72,7 +70,7 @@ function BusinessProfileCircleMenu(){
             }
         };
         getNameFamilyBusiness();
-    },[setName,setFamily]);
+    },[setName]);
 
 
 
@@ -108,7 +106,7 @@ function BusinessProfileCircleMenu(){
             >
                 <Link style={linkstyle} to='/business/editprofile'>
                 <MenuItem style={styleMenuItem}  onClick={handleClose}>
-                    <li style={nameStyle}>{name} {family}</li>
+                    <li style={nameStyle}>{name}</li>
                 </MenuItem>
                 </Link>
 

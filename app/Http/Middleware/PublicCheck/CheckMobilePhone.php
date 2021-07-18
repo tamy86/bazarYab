@@ -36,6 +36,5 @@ class CheckMobilePhone
 
 
 
-        return $next($request);
     }
 }

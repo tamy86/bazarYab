@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Container  from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import SaveIcon from '@material-ui/icons/Save';
@@ -9,7 +9,8 @@ import StoreIcon from '@material-ui/icons/Store';
 import BusinessIcon from '@material-ui/icons/Business';
 
 import { makeStyles } from '@material-ui/core/styles';
-
+import BusinessAlerts from "./BusinessAlertShow";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,11 +77,136 @@ const spaceBetwenButton={
 };
 
 function BusinessEditProfileForm(){
+    const [errormessage,setErrormesasage]=React.useState('');
+    const [showerror,setShowerror]=React.useState(false);
+    const [businssMobile,setBusinessMobile]=React.useState();
+    const [businssName,setBusinessName]=React.useState('');
+    const [businssAddress,setBusinessAddress]=React.useState();
+    const [error,setError]=React.useState();
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     const classes = useStyles();
 
+
+    useEffect(()=>{
+
+        axios.defaults.headers.common['Authorization']='Bearer'+localStorage.getItem('token');
+
+        const getBusinessUserInfo=async ()=>{
+            try{
+
+                const res=await axios.get('/api/business/editprofile');
+
+                setBusinessMobile(res.data['phone']);
+                setBusinessName(res.data['name']);
+                setBusinessAddress(res.data['address']);
+
+            }
+            catch (error) {
+                setErrormesasage(
+                    {
+                        msg:error.response.data['message'],
+                        key:Math.random(),
+                        errortype:error.response.data['message type'],
+
+                    });
+                setShowerror(true);
+
+            }
+        };
+        getBusinessUserInfo();
+    },[setBusinessMobile,setBusinessName,setBusinessAddress]);
+
+
+    function saveEditedForm() {
+
+        const charFarsi = /^[-]|[۰۱۲۳۴۵۶۷۸۹]|[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ\s]+$/;
+
+        const resultCharFarsiName = businssName.match(charFarsi);
+        const resultCharFarsiAddress = businssAddress.match(charFarsi);
+
+        if ((!resultCharFarsiName) && (!resultCharFarsiAddress)) {
+            setErrormesasage(
+                {
+                    msg: 'نام یا آدرس وارد شده صحیح نمی باشد. (نام و آدرس باید فارسی و خالی نباشند)',
+                    key: Math.random(),
+                    errortype: 'warning'
+                });
+
+            setShowerror(true);
+
+        } else
+            if ((!resultCharFarsiName)||(businssName==null)) {
+            setErrormesasage(
+                {
+                    msg: 'نام صحیح نمی باشد(نام باید فارسی و خالی نباشد)',
+                    key: Math.random(),
+                    errortype: 'warning'
+                });
+
+            setShowerror(true);
+        }
+        else
+            if ((!resultCharFarsiAddress)||(businssName==null)) {
+            setErrormesasage(
+                {
+                    msg: 'آدرس صحیح نمی باشد (آدرس باید فارسی و خالی نباشد)',
+                    key: Math.random(),
+                    errortype: 'warning'
+                });
+
+            setShowerror(true);
+        }
+        else {
+
+            axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
+
+            axios.put('/api/business/updateprofileform', {
+                'businessMobile': businssMobile,
+                'businessName': businssName,
+                'businessAddress': businssAddress,
+            }).then((res) => {
+                if ((res.data['Success'] === 1) || (res.status === 200)) {
+                    setErrormesasage(
+                        {
+                            msg: res.data['message'],
+                            key: Math.random(),
+                            errortype: res.data['message_type'],
+                        });
+
+                    setShowerror(true);
+                }
+            }).catch((error) => {
+                setErrormesasage(
+                    {
+                        msg: error.response.data['message'],
+                        key: Math.random(),
+                        errortype: error.response.data['message_type'],
+                    });
+                setShowerror(true);
+
+
+            });
+
+
+        }
+    }
+
+
     return(
         <Container  style={styleBgForm}>
+
+            {showerror ?
+                <BusinessAlerts key={errormessage.key} errormessage={errormessage.msg} errortype={errormessage.errortype}/>:null
+            }
+
 
             <div className="card-header" style={headerLoginForm}>
                 فرم ویرایش کسب و کار<StoreIcon style={mobileIconStyle}/>
@@ -90,27 +216,36 @@ function BusinessEditProfileForm(){
                 <Container maxWidth='xs' xs='6'>
                     <TextField
                         id="mobileNoShoping"
-                        label="تلفن همراه"
+
                         InputProps={{endAdornment:<PhoneAndroidIcon/>}}
                         disabled={true}
+                        defaultValue={businssMobile}
+                        value={businssMobile}
+                        inputProps={{readOnly:true}}
+
+
                     />
                 </Container>
                 <Container maxWidth='xs' xs='6'>
                     <TextField
                         id="shopingName"
-                        label="نام فروشگاه"
                         InputProps={{endAdornment:<StoreIcon/>}}
+                        value={businssName}
+                        onChange={event=>setBusinessName(event.target.value)}
+
+
                     />
                 </Container>
                 <Container maxWidth='xs' xs='6'>
                     <TextField
                         id="shopingAddress"
-                        label="آدرس فروشگاه"
                         InputProps={{endAdornment:<BusinessIcon/>}}
+                        value={businssAddress}
+                        onChange={event=>setBusinessAddress(event.target.value)}
                     />
                 </Container>
                 <div style={spaceBetwenButton}>
-                    <Button variant="outlined" color="primary" style={styleButton}>
+                    <Button variant="outlined" color="primary" style={styleButton} onClick={()=>{saveEditedForm();}}>
                         ذخیره فرم<SaveIcon/>
                     </Button>
                     <Button variant="outlined" color="primary" style={styleButton}>
