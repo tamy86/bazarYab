@@ -13,7 +13,7 @@ class InsertBusinessSettingDiscountForm extends Migration
      */
     public function up()
     {
-        Schema::create('businesssettingform', function (Blueprint $table) {
+        Schema::create('businesssettingforms', function (Blueprint $table) {
             $table->id();
             $table->integer('businessUserId')->unsigned()->index();
             $table->foreign('businessUserId')->references('id')->on('businessusers');
