@@ -34,11 +34,14 @@ class Businessuser extends  Authenticatable implements JWTSubject
     }
 
 
-    public function Businessnewcustomer(){
+    public function Businessnewcustomers(){
             return $this->belongsToMany(Businessnewcustomer::class);
     }
 
+    public function businesssettingforms(){
+        return $this->hasMany(Businesssettingform::class);
 
+        }
 
     public function getJWTIdentifier()
     {

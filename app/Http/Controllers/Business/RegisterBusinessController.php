@@ -178,6 +178,7 @@ class RegisterBusinessController extends Controller
     protected function createNewToken($token){
         return response()->json([
             'access_token' => $token,
+            'id'=>auth()->user()->id,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'message'=>'شما به درستی اعتبار سنجی شدید و لاگین کردید',
