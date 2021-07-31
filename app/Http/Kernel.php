@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends HttpKernel
 {
@@ -69,5 +70,8 @@ class Kernel extends HttpKernel
         'checkallmobile'=>\App\Http\Middleware\publicCheck\CheckMobilePhone::class,
         'checknewcustomerform'=>\App\Http\Middleware\publicCheck\CheckNewCustomerForm::class,
         'checkbusinesseditprofile'=>\App\Http\Middleware\Business\CheckEditProfileForm::class,
+        'checksettingrow1'=>\App\Http\Middleware\Business\CheckSettingRow1::class,
+        'checksettingrow2'=>\App\Http\Middleware\Business\CheckSettingRow2::class,
+        'checksettingrow3'=>\App\Http\Middleware\Business\CheckSettingRow3::class,
     ];
 }

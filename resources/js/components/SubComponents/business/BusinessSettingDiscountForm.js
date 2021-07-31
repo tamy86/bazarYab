@@ -18,6 +18,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import axios from "axios";
 import BusinessAlerts from "./BusinessAlertShow";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+
+
+import Dialog from "@material-ui/core/Dialog/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+// import SearchIcon from "@material-ui/core/SvgIcon/SvgIcon";
+// import SearchIcon from '@material-ui/icons/Search';
+// import SaveIcon from '@material-ui/icons/Save';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,6 +90,11 @@ width:'70%',
     fontFamily:'IRANSans',
 
 };
+const textDialog={
+    fontFamily:'IRANSans',
+    direction:'rtl',
+
+};
 
 function BusinessSettingDiscountForm(){
 
@@ -101,6 +119,16 @@ function BusinessSettingDiscountForm(){
     const[error,setError]=React.useState();
     const [errormessage,setErrormesasage]=React.useState('');
     const [showerror,setShowerror]=React.useState(false);
+
+
+    const [openDialog,setOpenDialog]=React.useState(false);
+
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    };
+
+
+
 
     useEffect(()=> {
 
@@ -189,23 +217,196 @@ function BusinessSettingDiscountForm(){
     },[setListMonth]);
 
 
-    const handeleChangeRow1 = (event) => {
+    const handelChangeCustomerNoRow1 = (event) => {
         setCustomerNo1(event.target.value);
+    };
+    const handelChangeCustomerNoRow2 = (event) => {
+        setCustomerNo2(event.target.value);
+    };
+    const handelChangeCustomerNoRow3 = (event) => {
+        setCustomerNo3(event.target.value);
+    };
+
+    const handelChangePercentRow1 = (event) => {
         setPercent1(event.target.value);
+    };
+    const handelChangePercentRow2 = (event) => {
+        setPercent2(event.target.value);
+    };
+    const handelChangePercentRow3 = (event) => {
+        setPercent3(event.target.value);
+    };
+
+    const handelChangeMonthRow1 = (event) => {
         setMonth1(event.target.value);
     };
-
-    const handeleChangeRow2 = (event) => {
-        setCustomerNo2(event.target.value);
-        setPercent2(event.target.value);
+    const handelChangeMonthRow2 = (event) => {
         setMonth2(event.target.value);
     };
-
-    const handeleChangeRow3 = (event) => {
-        setCustomerNo3(event.target.value);
-        setPercent3(event.target.value);
+    const handelChangeMonthRow3 = (event) => {
         setMonth3(event.target.value);
     };
+
+
+    function saveSettingRow1() {
+
+        // const charFarsi = /^[-]|[۰۱۲۳۴۵۶۷۸۹]|[ آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ\s]+$/;
+
+        // const resultCharFarsiName = businssName.match(charFarsi);
+        // const resultCharFarsiAddress = businssAddress.match(charFarsi);
+
+
+            axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
+
+            axios.put('/api/business/savesettingrow1', {
+                'customerNo1': customerNo1,
+                'percentNo1': percent1,
+                'monthNo1': month1,
+            }).then((res) => {
+                if ((res.data['Success'] === 1) || (res.status === 200)) {
+                    setErrormesasage(
+                        {
+                            msg: res.data['message'],
+                            key: Math.random(),
+                            errortype: res.data['message_type'],
+                        });
+
+                    setShowerror(true);
+                }
+            }).catch((error) => {
+                setErrormesasage(
+                    {
+                        msg: error.response.data['message'],
+                        key: Math.random(),
+                        errortype: error.response.data['message_type'],
+                    });
+                setShowerror(true);
+
+
+            });
+
+
+        // }
+    }
+
+    function saveSettingRow2() {
+
+
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
+
+        axios.put('/api/business/savesettingrow2', {
+            'customerNo2': customerNo2,
+            'percentNo2': percent2,
+            'monthNo2': month2,
+        }).then((res) => {
+            if ((res.data['Success'] === 1) || (res.status === 200)) {
+                setErrormesasage(
+                    {
+                        msg: res.data['message'],
+                        key: Math.random(),
+                        errortype: res.data['message_type'],
+                    });
+
+                setShowerror(true);
+            }
+        }).catch((error) => {
+            setErrormesasage(
+                {
+                    msg: error.response.data['message'],
+                    key: Math.random(),
+                    errortype: error.response.data['message_type'],
+                });
+            setShowerror(true);
+
+
+        });
+
+
+        // }
+    }
+
+
+    function saveSettingRow3() {
+
+
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
+
+        axios.put('/api/business/savesettingrow3', {
+            'customerNo3': customerNo3,
+            'percentNo3': percent3,
+            'monthNo3': month3,
+        }).then((res) => {
+            if ((res.data['Success'] === 1) || (res.status === 200)) {
+                setErrormesasage(
+                    {
+                        msg: res.data['message'],
+                        key: Math.random(),
+                        errortype: res.data['message_type'],
+                    });
+
+                setShowerror(true);
+            }
+        }).catch((error) => {
+            setErrormesasage(
+                {
+                    msg: error.response.data['message'],
+                    key: Math.random(),
+                    errortype: error.response.data['message_type'],
+                });
+            setShowerror(true);
+
+
+        });
+
+
+        // }
+    }
+
+
+
+    function submitFinalForm(){
+                   setOpenDialog(true);
+                    setDisableForm(false);
+                    setShowPresentedInfo(true);
+    }
+
+
+    const finalSubmitSettingForm = () => {
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer' + localStorage.getItem('token');
+
+        axios.patch('/api/business/submitfinalform', {
+        }).then((res) => {
+            if ((res.data['Success'] === 1) || (res.status === 200)) {
+                setErrormesasage(
+                    {
+                        msg: res.data['message'],
+                        key: Math.random(),
+                        errortype: res.data['message_type'],
+                    });
+
+                setShowerror(true);
+                setOpenDialog(false);
+            }
+        }).catch((error) => {
+            setErrormesasage(
+                {
+                    msg: error.response.data['message'],
+                    key: Math.random(),
+                    errortype: error.response.data['message_type'],
+                });
+            setShowerror(true);
+
+
+        });
+
+
+
+    };
+
+
 
     if((error===401)||(error===400)||(error===500)||(error===408)||(error===402)) {
         localStorage.removeItem('token');
@@ -224,6 +425,44 @@ function BusinessSettingDiscountForm(){
                     <BusinessAlerts key={errormessage.key} errormessage={errormessage.msg}
                                     errortype={errormessage.errortype}/> : null
                 }
+
+
+
+
+                <Dialog open={openDialog} onClose={handleDialogClose} style={textDialog} >
+
+                    <DialogTitle style={{'backgroundColor':'#E67E22'}}>
+                        <h3 style={textDialog}>پیام مهم از سمت سیستم</h3>
+                    </DialogTitle>
+
+                    <DialogContent>
+                        <DialogContentText style={textDialog}>
+                            <h4 style={{'color':'#E67E22'}}>
+                                دقت نمایید !
+                                <br/>
+                                در صورت تایید فرم تخفیف ها ردیف های تنظیم شده توسط شما در این فرم در سیستم
+                                 ثبت خواهد شد و دیگر قادر به ویرایش و یا تغییر آن ردیف ها نخواهید بود</h4>
+
+
+                        </DialogContentText>
+                    </DialogContent>
+
+                    <DialogActions>
+                        <Button autoFocus onClick={handleDialogClose} color="primary">
+                            <h3 style={textDialog}>انصراف</h3>
+                        </Button>
+                        <Button autoFocus onClick={finalSubmitSettingForm} color="primary">
+                            <h3 style={textDialog}>تایید</h3>
+                        </Button>
+                    </DialogActions>
+
+                </Dialog>
+
+
+
+
+
+
 
                 <div className="card-header" style={headerSettingForm}>
                     <SettingsIcon/>
@@ -244,7 +483,7 @@ function BusinessSettingDiscountForm(){
                         به عنوان مثال: میتوانید مشخص نمایید
                         مشتری پس از معرفی چه تعداد مشتری(تعداد مشتری معرفی شده) میتواند چند درصد تخفیف
                         (در قسمت درصد تخفیف برای مشتری) و در چه مدت زمانی (در قسمت تعداد ماه قابل استفاده از تخفیف)
-                        از فروشکاه یا صاحب کسب و کار را داشته باشد.
+                        از تخفیف فروشکاه یا صاحب کسب و کار استفاده نماید.
                         هر صاحب کسب و کار میتواند 3 سطر در رابطه با تخفیفات را به صورت
                         صعودی تنظیم نماید. به عنوان مثال : یک مشتری(خریدار) میتواند با
                         توجه به تعداد مشتری معرفی شده تنظیم شده در سطر اول زمانی که تعداد افراد معرف شده توسط مشتری
@@ -268,13 +507,13 @@ function BusinessSettingDiscountForm(){
                                 id='customerNo'
                                 value={customerNo1}
                                 style={selectStyle}
-                                onChange={handeleChangeRow1}
+                                onChange={handelChangeCustomerNoRow1}
 
                             >
                                 {listcustomerNo.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.no_customer} نفر </MenuItem>
+                                        <MenuItem key={list.id} value={list.no_customer}>{list.no_customer} نفر </MenuItem>
                                     )
 
 
@@ -292,13 +531,12 @@ function BusinessSettingDiscountForm(){
                                 id='customerpercent'
                                 value={percent1}
                                 style={selectStyle}
-                                onChange={handeleChangeRow1}
-
+                                onChange={handelChangePercentRow1}
                             >
                                 {listPercent.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.percent} درصد </MenuItem>
+                                        <MenuItem key={list.id} value={list.percent}>{list.percent} درصد </MenuItem>
                                     )
 
 
@@ -317,13 +555,12 @@ function BusinessSettingDiscountForm(){
                                 id='customermonth1'
                                 value={month1}
                                 style={selectStyle}
-                                onChange={handeleChangeRow1}
-
+                                onChange={handelChangeMonthRow1}
                             >
                                 {listMonth.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.month} ماه </MenuItem>
+                                        <MenuItem key={list.id} value={list.month}>{list.month} ماه </MenuItem>
                                     )
 
 
@@ -332,6 +569,17 @@ function BusinessSettingDiscountForm(){
 
                             </Select>
                         </Grid>
+                        <div>
+                            <IconButton
+                                color="primary"
+                                aria-label="upload picture"
+                                component="span"
+                                style={{backgroundColor:"#e6e6e6",bottom:'5px'}}
+                                onClick={()=>{saveSettingRow1();}}
+                            >
+                                <SaveIcon />
+                            </IconButton>
+                        </div>
                     </Grid>
 
 
@@ -348,13 +596,13 @@ function BusinessSettingDiscountForm(){
                                 id='customerNo'
                                 value={customerNo2}
                                 style={selectStyle}
-                                onChange={handeleChangeRow2}
+                                onChange={handelChangeCustomerNoRow2}
 
                             >
                                 {listcustomerNo.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.no_customer} نفر </MenuItem>
+                                        <MenuItem key={list.id} value={list.no_customer}>{list.no_customer} نفر </MenuItem>
                                     )
 
 
@@ -372,13 +620,13 @@ function BusinessSettingDiscountForm(){
                                 id='customerpercent'
                                 value={percent2}
                                 style={selectStyle}
-                                onChange={handeleChangeRow2}
+                                onChange={handelChangePercentRow2}
 
                             >
                                 {listPercent.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.percent} درصد </MenuItem>
+                                        <MenuItem key={list.id} value={list.percent}>{list.percent} درصد </MenuItem>
                                     )
 
 
@@ -386,6 +634,8 @@ function BusinessSettingDiscountForm(){
 
 
                             </Select>
+
+
                         </Grid>
 
 
@@ -397,13 +647,13 @@ function BusinessSettingDiscountForm(){
                                 id='customermonth1'
                                 value={month2}
                                 style={selectStyle}
-                                onChange={handeleChangeRow2}
+                                onChange={handelChangeMonthRow2}
 
                             >
                                 {listMonth.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.month} ماه </MenuItem>
+                                        <MenuItem key={list.id} value={list.month}>{list.month} ماه </MenuItem>
                                     )
 
 
@@ -412,6 +662,18 @@ function BusinessSettingDiscountForm(){
 
                             </Select>
                         </Grid>
+
+                        <div>
+                            <IconButton
+                                color="primary"
+                                aria-label="upload picture"
+                                component="span"
+                                style={{backgroundColor:"#e6e6e6",bottom:'5px'}}
+                                onClick={()=>{saveSettingRow2();}}
+                            >
+                                <SaveIcon />
+                            </IconButton>
+                        </div>
                     </Grid>
 
 
@@ -428,13 +690,13 @@ function BusinessSettingDiscountForm(){
                                 id='customerNo'
                                 value={customerNo3}
                                 style={selectStyle}
-                                onChange={handeleChangeRow3}
+                                onChange={handelChangeCustomerNoRow3}
 
                             >
                                 {listcustomerNo.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.no_customer} نفر </MenuItem>
+                                        <MenuItem key={list.id} value={list.no_customer}>{list.no_customer} نفر </MenuItem>
                                     )
 
 
@@ -452,13 +714,13 @@ function BusinessSettingDiscountForm(){
                                 id='customerpercent'
                                 value={percent3}
                                 style={selectStyle}
-                                onChange={handeleChangeRow3}
+                                onChange={handelChangePercentRow3}
 
                             >
                                 {listPercent.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.percent} درصد </MenuItem>
+                                        <MenuItem key={list.id} value={list.percent}>{list.percent} درصد </MenuItem>
                                     )
 
 
@@ -478,13 +740,13 @@ function BusinessSettingDiscountForm(){
                                 id='customermonth1'
                                 value={month3}
                                 style={selectStyle}
-                                onChange={handeleChangeRow3}
+                                onChange={handelChangeMonthRow3}
 
                             >
                                 {listMonth.map(list => {
 
                                     return (
-                                        <MenuItem key={list.id} value={list.id}>{list.month} ماه </MenuItem>
+                                        <MenuItem key={list.id} value={list.month}>{list.month} ماه </MenuItem>
                                     )
 
 
@@ -493,14 +755,27 @@ function BusinessSettingDiscountForm(){
 
                             </Select>
                         </Grid>
+                        <div>
+                            <IconButton
+                                color="primary"
+                                aria-label="upload picture"
+                                component="span"
+                                style={{backgroundColor:"#e6e6e6",bottom:'5px'}}
+                                onClick={()=>{saveSettingRow3();}}
+                            >
+                                <SaveIcon />
+                            </IconButton>
+                        </div>
                     </Grid>
 
 
                     <div style={spaceBetwenButton}>
-                        <Button variant="outlined" color="primary" style={styleButton}>
+
+                        <Button variant="outlined" color="primary" style={styleButton}  onClick={()=>{submitFinalForm();}}>
                             <SaveIcon/>
-                            ذخیره فرم
+                            نهایی سازی فرم
                         </Button>
+
                         <Button variant="outlined" color="primary" style={styleButton}>
                             <CancelIcon/>
                             کنسل فرم
@@ -509,8 +784,7 @@ function BusinessSettingDiscountForm(){
                 </form>
             </Container>
         );
-    }
-    else{
+    }else{
             localStorage.removeItem('token');
             window.location = `/business/login`;
     }
