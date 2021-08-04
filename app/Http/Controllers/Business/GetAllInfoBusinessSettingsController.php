@@ -129,7 +129,12 @@ class GetAllInfoBusinessSettingsController extends Controller
 
 
         }catch (\Exception $exception){
-
+            if($exception) {
+                return response()->json([
+                    'message' => '1304 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
+                    'message_type' => 'error',
+                ], 500);
+            }
         }
 
     }
@@ -181,7 +186,12 @@ class GetAllInfoBusinessSettingsController extends Controller
 
 
         }catch (\Exception $exception){
-
+            if($exception) {
+                return response()->json([
+                    'message' => '1305 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
+                    'message_type' => 'error',
+                ], 500);
+            }
         }
 
     }
@@ -229,13 +239,14 @@ class GetAllInfoBusinessSettingsController extends Controller
 
 
             }
-
-
-
         }catch (\Exception $exception){
-
+            if($exception) {
+                return response()->json([
+                    'message' => '1306 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
+                    'message_type' => 'error',
+                ], 500);
+            }
         }
-
     }
 
 
@@ -245,32 +256,39 @@ class GetAllInfoBusinessSettingsController extends Controller
             $businessUserId = auth()->user()->id;
             $editStatus=1;
 
+            $countRowExistForUsers=DB::select('CALL BusinessAnyRowExistForUsers(?)',array($businessUserId));
+            $anyRowExist=$countRowExistForUsers[0]->any_row_exist;
 
-// $insertSettingForm=DB::insert('CALL BusinessInsertSettingForm(?,?,?,?)',array($businessUserId,$monthNo1,$percentNo1,$customerNo1));
-// $countRowSettingFormUser=DB::select('CALL BusinessCountNoRowInSettingForm(?)',array($businessUserId));
-// $sumRowSettingFormUser=$countRowSettingFormUser[0]->sum_no_row_eachuser;
+            if($anyRowExist>0) {
+                $countNotSubmitedRow = DB::select('CALL BusinessCountNotSubmitedRow(?)', array($businessUserId));
+                $sumSubmitedRow = $countNotSubmitedRow[0]->sum_submited_row;
 
-//if ($sumRowSettingFormUser==0)
-//{
-     $updateEditStatusSettingForm=DB::update('CALL BusinessUpdateEditstatusSettingForm(?)',array($businessUserId));
+                    if ($sumSubmitedRow>0){
 
-    return response()->json([
-        'message' => ' تمامی ردیف های ثبت شده شما با موفقیت در سیستم ذخیره شد',
-        'message_type' => 'Success',
-    ],200);
+                        $updateEditStatusSettingForm=DB::update('CALL BusinessUpdateEditstatusSettingForm(?)',array($businessUserId));
 
-//}else{
-//    return response()->json([
-//        'message' => '   شما هیچ ردیفی در فرم تنظیمات تخفیف ها ثبت نکرده اید یا قبلا فرم تنظیمات خود را ثبت نهایی کرده اید',
-//        'message_type' => 'warning',
-//    ], 422);
-//}
+                        return response()->json([
+                            'message' => ' تمامی ردیف های ثبت شده شما با موفقیت در سیستم ذخیره شد',
+                            'message_type' => 'Success',
+                        ],200);
 
-
+                    }else {
+                         return response()->json([
+                          'message' => 'شما ردیفی که ثبت نهایی نشده باشد ندارید',
+                           'message_type' => 'warning',
+                           ], 422);
+                    }
+            }
+            else{
+                return response()->json([
+                    'message' => 'شما هنوز هیچ ردیفی را ثبت نکرده اید',
+                    'message_type' => 'warning',
+                ], 422);
+            }
         }catch (\Exception $exception){
             if($exception) {
                 return response()->json([
-                    'message' => '1304 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
+                    'message' => '1307 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
                     'message_type' => 'error',
                 ], 500);
             }
