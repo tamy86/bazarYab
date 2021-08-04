@@ -101,19 +101,19 @@ function BusinessSettingDiscountForm(){
     const classes = useStyles();
     const [loading,setLoading]=React.useState(true);
 
-    const[customerNo1,setCustomerNo1]=React.useState();
-    const[customerNo2,setCustomerNo2]=React.useState();
-    const[customerNo3,setCustomerNo3]=React.useState();
+    const[customerNo1,setCustomerNo1]=React.useState('');
+    const[customerNo2,setCustomerNo2]=React.useState('');
+    const[customerNo3,setCustomerNo3]=React.useState('');
     const [listcustomerNo, setListcustomerNo]=React.useState([]);
 
-    const[percent1,setPercent1]=React.useState();
-    const[percent2,setPercent2]=React.useState();
-    const[percent3,setPercent3]=React.useState();
+    const[percent1,setPercent1]=React.useState('');
+    const[percent2,setPercent2]=React.useState('');
+    const[percent3,setPercent3]=React.useState('');
     const [listPercent, setListPercent]=React.useState([]);
 
-    const[month1,setMonth1]=React.useState();
-    const[month2,setMonth2]=React.useState();
-    const[month3,setMonth3]=React.useState();
+    const[month1,setMonth1]=React.useState('');
+    const[month2,setMonth2]=React.useState('');
+    const[month3,setMonth3]=React.useState('');
     const [listMonth, setListMonth]=React.useState([]);
 
     const[error,setError]=React.useState();
@@ -407,6 +407,19 @@ function BusinessSettingDiscountForm(){
     };
 
 
+
+const clearSubmitSettingForm=()=> {
+
+    setCustomerNo1('');
+    setCustomerNo2('');
+    setCustomerNo3('');
+    setPercent1('');
+    setPercent2('');
+    setPercent3('');
+    setMonth1('');
+    setMonth2('');
+    setMonth3('');
+}
 
     if((error===401)||(error===400)||(error===500)||(error===408)||(error===402)) {
         localStorage.removeItem('token');
@@ -776,7 +789,7 @@ function BusinessSettingDiscountForm(){
                             نهایی سازی فرم
                         </Button>
 
-                        <Button variant="outlined" color="primary" style={styleButton}>
+                        <Button variant="outlined" color="primary" style={styleButton} onClick={()=>{clearSubmitSettingForm();}}>
                             <CancelIcon/>
                             کنسل فرم
                         </Button>
