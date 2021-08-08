@@ -19,6 +19,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import {ThemeProvider} from '@material-ui/core';
 import {Link} from "react-router-dom";
 
@@ -300,6 +301,15 @@ function BusinessHeaderMenu() {
                             <ListItemIcon><SettingsIcon/></ListItemIcon>
                             <ListItemText  primary={'فرم تنظیم تخفیف ها'}/>
                         </ListItem>
+                        </Link>
+                    </List>
+
+                    <List>
+                        <Link style={linkstyle} to='/business/viewsettingdiscount'>
+                            <ListItem button key={'مشاهده تنظیمات تخفیف ها'} className={classes.list}>
+                                <ListItemIcon><VisibilityIcon/></ListItemIcon>
+                                <ListItemText  primary={'مشاهده تنظیمات تخفیف ها'}/>
+                            </ListItem>
                         </Link>
                     </List>
 

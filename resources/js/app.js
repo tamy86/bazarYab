@@ -135,6 +135,10 @@ function App(){
 
                 </Route>
 
+                <Route exact path="/business/viewsettingdiscount" component={BusinessIndex}>
+
+                </Route>
+
                 <Route exact path="/business/editprofile" component={BusinessIndex}>
 
                 </Route>

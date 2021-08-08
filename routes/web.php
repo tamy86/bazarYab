@@ -69,6 +69,10 @@ Route::get('/business/settingdiscount', function () {
     return view('Business.BusinessSettingDiscount');
 });
 
+Route::get('/business/viewsettingdiscount', function () {
+    return view('Business.BusinessViewSettingDiscount');
+});
+
 Route::get('/business/customerreport', function () {
     return view('Business.BusinessCustomerReport');
 });
