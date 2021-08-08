@@ -15,11 +15,11 @@ import BusinessAlerts from "./BusinessAlertShow";
 
 
 const columns = [
-    { id: 'id', label: 'ردیف ثبت شده', minWidth: 120 },
-    { id: 'name',label: 'تعدا مشتری ثبت شده', minWidth: 100 },
-    { id: 'family',label: 'درصد تخفیف ثبت شده',minWidth: 110,align: 'right',},
-    { id: 'phone',label: 'ماه های ثبت شده',minWidth: 110,align: 'right',},
-    { id: 'COUNT(businessnewcustomers.id)',label: 'وضعیت ثبت ردیف',minWidth: 170,align: 'right',},];
+    { id: 'noRow', label: 'ردیف ثبت شده', minWidth: 120 },
+    { id: 'noCustomer',label: 'تعداد مشتری ثبت شده', minWidth: 100 },
+    { id: 'percent',label: 'درصد تخفیف ثبت شده',minWidth: 110,align: 'right',},
+    { id: 'month',label: 'ماه های ثبت شده',minWidth: 110,align: 'right',},
+    { id: 'editStatus',label: 'وضعیت ثبت نهایی ردیف',minWidth: 170,align: 'right',},];
 
 const useStyles = makeStyles({
     root: {
@@ -98,10 +98,11 @@ function BusinessViewSettingDiscountForm() {
 
         const getAllInfoTable=async ()=>{
             try{
-                const res= await axios.get('/api/business/report');
+                const res= await axios.get('/api/business/viewsettingform');
 
 
                 setRowReport(res.data);
+
             }
             catch (error) {
 
@@ -160,6 +161,13 @@ function BusinessViewSettingDiscountForm() {
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
+
+                                         if(row['editStatus']===1){
+                                              row['editStatus']='فعال'
+                                          }else
+                                              if(row['editStatus']===0){
+                                              row['editStatus']='غیرفعال'
+                                          }
                                             return (
                                                 <TableCell key={column.id} align={column.align} style={{fontFamily:"IRANSans",textAlign:'center'}}>
                                                     {column.format && typeof value === 'number' ? column.format(value) : value}

@@ -64,6 +64,7 @@ Route::put('/business/savesettingrow1',[GetAllInfoBusinessSettingsController::cl
 Route::put('/business/savesettingrow2',[GetAllInfoBusinessSettingsController::class,'saveSettingRow2'])->middleware('checksettingrow2');
 Route::put('/business/savesettingrow3',[GetAllInfoBusinessSettingsController::class,'saveSettingRow3'])->middleware('checksettingrow3');
 Route::patch('/business/submitfinalform',[GetAllInfoBusinessSettingsController::class,'submitFinalForm']);
+Route::get('/business/viewsettingform',[GetAllInfoBusinessSettingsController::class,'viewAllInfoSettingForm']);
 
 
 

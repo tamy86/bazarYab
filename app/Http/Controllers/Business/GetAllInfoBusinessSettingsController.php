@@ -296,5 +296,22 @@ class GetAllInfoBusinessSettingsController extends Controller
 
     }
 
+public function viewAllInfoSettingForm(){
 
+        try{
+            $businessUserId = auth()->user()->id;
+            $getAllInfoSettingForms=DB::select('CALL BusinessGetAllInfoBusinessSettingFormsTable(?)',array($businessUserId));
+
+            return response()->json($getAllInfoSettingForms);
+
+        }catch (\Exception $exception){
+            if($exception) {
+            return response()->json([
+                'message' => '1308 خطا در ارتباط با سرور یا داده وروودی لطفا با پشتیبانی تماس بگیرید ',
+                'message_type' => 'error',
+            ], 500);
+                }
+        }
+
+}
 }
