@@ -85,4 +85,7 @@ Route::get('/business/editprofile', function () {
     return view('Business.BusinessEditProfile');
 });
 
+Route::get('/business/logout', function () {
+    return view('Business.BusinessLogout');
+});
 
