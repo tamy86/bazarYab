@@ -9,6 +9,7 @@ import BusinessCustomerSearch from './BusinessCustomerSearch';
 import BusinessNewCustomer from './BusinessNewCustomer';
 import BusinessSettingDiscount from './BusinessSettingDiscount';
 import BusinessViewSettingDiscount from './BusinessViewSettingDiscount';
+import BusinessCustomerHasOff from './BusinessCustomerHasOff';
 import BusinessEditProfile from './BusinessEditProfile';
 import BusinessHeader from "./BusinessHeader";
 import BusinessFooter from "./BusinessFooter";
@@ -43,6 +44,10 @@ function Businessindex() {
                     </Route>
 
                     <Route exact path="/business/viewsettingdiscount" component={BusinessViewSettingDiscount}>
+
+                    </Route>
+
+                    <Route exact path="/business/customeroffreport" component={BusinessCustomerHasOff}>
 
                     </Route>
 

@@ -139,6 +139,10 @@ function App(){
 
                 </Route>
 
+                <Route exact path="/business/customeroffreport" component={BusinessIndex}>
+
+                </Route>
+
                 <Route exact path="/business/editprofile" component={BusinessIndex}>
 
                 </Route>

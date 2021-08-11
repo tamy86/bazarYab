@@ -73,6 +73,10 @@ Route::get('/business/viewsettingdiscount', function () {
     return view('Business.BusinessViewSettingDiscount');
 });
 
+Route::get('/business/customeroffreport', function () {
+    return view('Business.BusinessViewSettingDiscount');
+});
+
 Route::get('/business/customerreport', function () {
     return view('Business.BusinessCustomerReport');
 });
@@ -88,4 +92,5 @@ Route::get('/business/editprofile', function () {
 Route::get('/business/logout', function () {
     return view('Business.BusinessLogout');
 });
+
 
