@@ -19,7 +19,7 @@ const columns = [
     { id: 'name',label: 'نام', minWidth: 100 },
     { id: 'family',label: 'نام خانوادگی',minWidth: 110,align: 'right',},
     { id: 'phone',label: 'شماره همراه',minWidth: 110,align: 'right',},
-    { id: 'COUNT(businessnewcustomers.id)',label: 'تعداد معرف',minWidth: 170,align: 'right',},];
+    { id: 'presentedCustomer',label: 'تعداد معرف',minWidth: 170,align: 'right',},];
 
 const useStyles = makeStyles({
     root: {
